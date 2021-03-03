@@ -5,9 +5,6 @@ import org.springframework.stereotype.Repository;
 import pl.marcin.ppmtool.domain.Project;
 
 @Repository
-public class ProjectRepository extends CrudRepository<Project, Long> {
-
-    @Override
-    public Iterable<Project> findAllById(Iterable<Long> iterable);
+public interface ProjectRepository extends CrudRepository<Project, Long> {
 
 }
