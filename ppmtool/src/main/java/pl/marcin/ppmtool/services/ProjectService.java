@@ -25,4 +25,12 @@ catch(Exception e) {
 
     }
 
+    public Project findProjectByIdentifier(String projectId){
+        Project project = projectRepository.findByProjectIdentifier(projectId);
+if (project == null){
+    throw new ProjectidException("Project ID '"+projectId+"does not exist");
+}
+return project;
+    }
+
 }
