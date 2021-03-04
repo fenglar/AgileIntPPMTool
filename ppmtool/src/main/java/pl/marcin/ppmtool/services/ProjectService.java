@@ -26,7 +26,7 @@ catch(Exception e) {
     }
 
     public Project findProjectByIdentifier(String projectId){
-        Project project = projectRepository.findByProjectIdentifier(projectId);
+        Project project = projectRepository.findByProjectIdentifier(projectId.toUpperCase());
 if (project == null){
     throw new ProjectidException("Project ID '"+projectId+"does not exist");
 }
@@ -34,5 +34,12 @@ return project;
     }
 public Iterable<Project> findAllProjects(){
         return projectRepository.findAll();
+}
+public void deleteProjectByIdentifier(String projectid){
+        Project project = projectRepository.findByProjectIdentifier(projectid);
+        if(projectid==null){
+            throw new ProjectidException("Cannot Project with ID"+projectid+". This project does not exist");
+        }
+        projectRepository.delete(project);
 }
 }
