@@ -35,7 +35,7 @@ onSubmit (e){
         start_date: this.state.start_date,
         end_date: this.state.end_date
     };
-this.props.createProject(newProject, this.props.history)
+this.props.createProject(newProject, this.props.history);
 }
     render() {
         return (
@@ -98,6 +98,6 @@ this.props.createProject(newProject, this.props.history)
 
 AddProject.propTypes={
     createProject:PropTypes.func.isRequired
-}
+};
 
 export default connect (null, {createProject}) (AddProject);
