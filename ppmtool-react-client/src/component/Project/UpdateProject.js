@@ -15,13 +15,17 @@ constructor(){
         projectIdentifier:"",
         description:"",
        start_date:"",
-        end_date:""
+        end_date:"",
+        errors: {}
     };
     this.onChange=this.onChange.bind(this);
     this.onSubmit=this.onSubmit.bind(this);
 }
 
 componentWillReceiveProps(nextProps){
+    if(nextProps.errors){
+        this.setState({errors:nextProps.errors});
+    }
 const { id,
 projectName,
 projectIdentifier,
@@ -62,6 +66,7 @@ onSubmit (e){
 }
 
     render() {
+        const {errors} = this.state;
         return (
             <div className="register">
             <div className="container">
@@ -71,11 +76,18 @@ onSubmit (e){
                         <hr />
                         <form onSubmit={this.onSubmit}>
                             <div className="form-group">
-                                <input type="text" className="form-control form-control-lg "
+                                <input type="text" className={classnames("form-control form-control-lg ", {
+                                    "is-invalid":errors.projectName
+                                })}
                                  placeholder="Project Name" 
                                  name="projectName"
                                  value={this.state.projectName}
                                  onChange={this.onChange}/>
+                                 {
+                                     errors.projectName && (
+                                         <div className="invalid-feedback">{errors.projectName}</div>
+                                     )
+                                 }
                             </div>
                             <div className="form-group">
                                 <input type="text" className="form-control form-control-lg" placeholder="Unique Project ID"
@@ -116,9 +128,11 @@ onSubmit (e){
 UpdateProject.propTypes= {
     getProject: PropTypes.func.isRequired,
     createProject: PropTypes.func.isRequired,
-    project: PropTypes.object.isRequired
+    project: PropTypes.object.isRequired,
+    errors: PropTypes.object.isRequired
 };
 const mapStateToProps = state => ({
-    project:state.project.project
+    project: state.project.project,
+    errors: state.errors
 });
 export default connect (mapStateToProps,{getProject, createProject})(UpdateProject);
