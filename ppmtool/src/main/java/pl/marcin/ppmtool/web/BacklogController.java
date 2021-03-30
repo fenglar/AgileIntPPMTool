@@ -12,6 +12,7 @@ import pl.marcin.ppmtool.services.MapValidationErrorService;
 import pl.marcin.ppmtool.services.ProjectTaskService;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/backlog")
@@ -30,5 +31,9 @@ if (errorMap != null) return errorMap;
 ProjectTask projectTask1=projectTaskService.addProjectTask(backlog_id, projectTask);
 return new ResponseEntity<ProjectTask>(projectTask1, HttpStatus.CREATED);
 
+    }
+    @GetMapping("/{backlog_id}")
+    public Iterable<ProjectTask> getProjectBacklog(@PathVariable String backlog_id){
+        return projectTaskService.findBacklogById(backlog_id);
     }
 }
