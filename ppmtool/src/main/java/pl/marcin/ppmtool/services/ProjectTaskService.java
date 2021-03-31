@@ -10,6 +10,8 @@ import pl.marcin.ppmtool.repositories.BacklogRepository;
 import pl.marcin.ppmtool.repositories.ProjectRepository;
 import pl.marcin.ppmtool.repositories.ProjectTaskRepository;
 
+import java.util.List;
+
 @Service
 public class ProjectTaskService {
 
@@ -77,6 +79,24 @@ return projectTaskRepository.findByProjectIdentifierOrderByPriority(id);
             throw new ProjectNotFoundException("Project Task '"+pt_id+"' does not exist in project: "+backlog_id);
         }
         return projectTask;
+    }
+    public ProjectTask updateByProjectSeqence(ProjectTask updatedTask, String backlog_id, String pt_id){
+        ProjectTask projectTask=findPTByProjectSequence(backlog_id, pt_id);
+
+        projectTask=updatedTask;
+
+        return projectTaskRepository.save(projectTask);
+    }
+
+    public void deletePTByProjectSequence (String backlog_id, String pt_id){
+        ProjectTask projectTask=findPTByProjectSequence(backlog_id, pt_id);
+
+        Backlog backlog = projectTask.getBacklog();
+        List<ProjectTask> pts = projectTask.getBacklog().getProjectTasks();
+        pts.remove(projectTask);
+        backlogRepository.save(backlog);
+
+        projectTaskRepository.delete(projectTask);
     }
 
 }
