@@ -4,7 +4,7 @@ import {GET_ERRORS,GET_PROJECT,GET_PROJECTS, DELETE_PROJECT} from "./types";
 
 export const createProject = (project, history) => async dispatch => {
     try {
-const res= await axios.post
+await axios.post
 ("/api/project", project);
 history.push("/dashboard");
 dispatch({
