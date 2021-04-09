@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import pl.marcin.ppmtool.domain.User;
 import pl.marcin.ppmtool.services.MapValidationErrorService;
 import pl.marcin.ppmtool.services.UserService;
+import pl.marcin.ppmtool.validator.UserValidator;
 
 import javax.validation.Valid;
 
@@ -24,10 +25,13 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private UserValidator userValidator;
+
     @PostMapping("/register")
     public ResponseEntity<?> registerUser(@Valid @RequestBody User user, BindingResult result) {
         //validate passwords match
-
+userValidator.validate(user,result);
         ResponseEntity<?> errorMap = mapValidationErrorService.MapValidationService(result);
         if (errorMap != null) return errorMap;
 
