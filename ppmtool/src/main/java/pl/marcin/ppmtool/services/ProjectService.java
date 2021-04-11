@@ -4,9 +4,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pl.marcin.ppmtool.domain.Backlog;
 import pl.marcin.ppmtool.domain.Project;
+import pl.marcin.ppmtool.domain.User;
 import pl.marcin.ppmtool.exceptions.ProjectidException;
 import pl.marcin.ppmtool.repositories.BacklogRepository;
 import pl.marcin.ppmtool.repositories.ProjectRepository;
+import pl.marcin.ppmtool.repositories.UserRepository;
 
 import java.util.Locale;
 
@@ -19,9 +21,16 @@ public class ProjectService {
     @Autowired
     private BacklogRepository backlogRepository;
 
+    @Autowired
+    private UserRepository userRepository;
 
-    public Project saveOrUpdateProject(Project project) {
+
+    public Project saveOrUpdateProject(Project project, String username) {
         try {
+
+            User user = userRepository.findByUsername(username);
+            project.setUser(user);
+            project.setProjectLeader(user.getUsername());
             project.setProjectIdentifier(project.getProjectIdentifier().toUpperCase());
 
             if(project.getId()==null){
