@@ -11,6 +11,9 @@ import UpdateProject from "./component/Project/UpdateProject";
 import ProjectBoard from "./component/ProjectBoard/ProjectBoard";
 import AddProjectTask from "./component/ProjectBoard/ProjectTasks/AddProjectTask";
 import UpdateProjectTask from "./component/ProjectBoard/ProjectTasks/UpdateProjectTask";
+import Landing from "./component/Layout/Landing";
+import Register from "./component/UserManagement/Register";
+import Login from "./component/UserManagement/Login";
 
 
 class App extends Component {
@@ -20,6 +23,18 @@ class App extends Component {
       <Router>
       <div className="App">
      <Header />
+
+     {
+       //public routes
+     }
+
+     <Route exact path="/" component= {Landing}/>
+     <Route exact path="/register" component={Register}/>
+     <Route exact path="/login" component={Login}/>
+
+     {
+       //private routes
+     }
      <Route exact path= "/dashboard" component={Dashboard} />
      <Route exact path= "/addProject" component={AddProject} />
      <Route exact path= "/updateProject/:id" component={UpdateProject} />
