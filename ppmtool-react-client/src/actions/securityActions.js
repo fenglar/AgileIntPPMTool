@@ -37,11 +37,20 @@ export const login = LoginRequest => async dispatch => {
     dispatch ({
         type: SET_CURRENT_USER,
         payload: decoded
-    })
+    });
     } catch (err) {
         dispatch ({
             type: GET_ERRORS,
             payload: err.response.data
         })
     }
+};
+
+export const logout = () => dispatch => {
+    localStorage.removeItem("jwtToken")
+    setJWTToken(false)
+    dispatch ({
+        type: SET_CURRENT_USER,
+        payload: {}
+    });
 };
